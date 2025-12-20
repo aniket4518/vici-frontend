@@ -18,19 +18,19 @@ export default function Home() {
   const people = [
     {
       id: 1,
-      name: "Sarah Chen",
+      
       designation: "Runner",
       image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop",
     },
     {
       id: 2,
-      name: "Alex Morgan",
+    
       designation: "Walker",
       image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop",
     },
     {
       id: 3,
-      name: "Jordan Lee",
+       
       designation: "Explorer",
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop",
     },
@@ -237,7 +237,7 @@ export default function Home() {
           />
           <Button email={email} />
         </form>
-         <div className="social-proof" style={{ position: 'relative', zIndex: 1 }}>
+         <div className="social-proof scale-75 md:scale-100" style={{ position: 'relative', zIndex: 1 }}>
           <div className="flex items-center justify-center">
             <AnimatedTooltip items={people} />
           </div>
@@ -245,7 +245,7 @@ export default function Home() {
         </div>
       
       {/* Phone Image - Center Bottom */}
-      <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 z-[5]" style={{ pointerEvents: 'none' }}>
+      <div className="fixed left-1/2 transform -translate-x-1/2 z-[5] bottom-28 md:bottom-0" style={{ pointerEvents: 'none' }}>
         <Image
           src="/phone.png"
           alt="Phone"
