@@ -39,7 +39,7 @@ export function useHover<T extends HTMLElement = HTMLElement>(
 // ============================================================================
 
 function UseHoverDemo() {
-  const hoverRef = React.useRef<HTMLDivElement>(null);
+  const hoverRef = React.useRef<HTMLDivElement>(null!);
   const isHovered = useHover(hoverRef);
 
   return (
