@@ -7,6 +7,7 @@ import {
   ModalTrigger,
   useModal,
 } from "@/components/ui/shadcn-io/animated-modal";
+import toast, { Toaster } from "react-hot-toast";
 
 interface ButtonProps {
   email: string;
@@ -46,11 +47,13 @@ function ButtonContent({ email }: ButtonProps) {
 
       if (response.status === 409) {
         // User already exists, open modal
+        toast.success("Thanks for joining our waitlist.");
         setOpen(true);
       } else if (!response.ok) {
         setError(data.error || "Failed to join waitlist");
       } else {
         // Successfully created user, open modal
+        toast.success("Thanks for joining our waitlist.");
         setOpen(true);
       }
     } catch (error) {
@@ -99,8 +102,10 @@ function ButtonContent({ email }: ButtonProps) {
   };
 
   return (
-    <div className="flex items-center justify-center">
-      <button 
+    <>
+      <Toaster position="top-center" />
+      <div className="flex items-center justify-center">
+        <button 
         className="bg-black dark:bg-white text-md dark:text-black text-white rounded-full disabled:opacity-80 disabled:cursor-not-allowed"  
         style={{ padding: '0.75rem 2rem' }}
         onClick={handleJoinWaitlist}
@@ -193,6 +198,7 @@ function ButtonContent({ email }: ButtonProps) {
         </ModalContent>
       </ModalBody>
     </div>
+    </>
   );
 }
 
