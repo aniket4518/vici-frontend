@@ -11,7 +11,7 @@ export const title = "React useHover Hook";
 // ============================================================================
 
 export function useHover<T extends HTMLElement = HTMLElement>(
-  elementRef: React.RefObject<T>
+  elementRef: React.RefObject<T | null>
 ): boolean {
   const [isHovered, setIsHovered] = React.useState<boolean>(false);
 
@@ -39,8 +39,8 @@ export function useHover<T extends HTMLElement = HTMLElement>(
 // ============================================================================
 
 function UseHoverDemo() {
-  const hoverRef = React.useRef<HTMLDivElement>(null!);
-  const isHovered = useHover(hoverRef);
+  const hoverRef = React.useRef<HTMLDivElement>(null);
+  const isHovered = useHover<HTMLDivElement>(hoverRef);
 
   return (
     <div className="p-6 max-w-sm mx-auto space-y-6">
