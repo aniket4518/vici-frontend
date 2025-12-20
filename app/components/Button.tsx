@@ -18,7 +18,7 @@ function ButtonContent({ email }: ButtonProps) {
   const [city, setCity] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const waitlistLink = "https://vici.com/waitlist";
+  const waitlistLink = "https://vici-app.vercel.app/";
   const { setOpen } = useModal();
 
   const copyToClipboard = () => {
