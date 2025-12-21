@@ -1,17 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { InputSchema } from "../zod/input";
 
-export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const { email } = body;
-
-    if (!email) {
+  export async function POST(request: NextRequest) {
+    try {
+      const body = await request.json();
+      // Validate with Zod
+      const result = InputSchema.safeParse(body);
+    if (!result.success) {
       return NextResponse.json(
-        { error: "Email is required" },
+        { error: result.error.issues[0]?.message || "Invalid input" },
         { status: 400 }
       );
     }
+    const { email } = result.data;
 
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
@@ -20,7 +22,7 @@ export async function POST(request: NextRequest) {
 
     if (existingUser) {
       return NextResponse.json(
-        { error: "Email already registered", user: existingUser },
+        { error: "Email already registered" },
         { status: 409 }
       );
     }

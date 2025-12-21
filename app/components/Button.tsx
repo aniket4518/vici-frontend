@@ -8,6 +8,7 @@ import {
   useModal,
 } from "@/components/ui/shadcn-io/animated-modal";
 import toast, { Toaster } from "react-hot-toast";
+import {InputSchema}from "../zod/input"
 
 interface ButtonProps {
   email: string;
@@ -24,10 +25,13 @@ function ButtonContent({ email }: ButtonProps) {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(waitlistLink);
   };
-
+  
   const handleJoinWaitlist = async () => {
-    if (!email) {
-      setError("Please enter your email first");
+    const parsedinput = InputSchema.safeParse({ email });
+    if (!parsedinput.success) {
+      const errorMsg = parsedinput.error.issues.map(issue => issue.message).join("; ") || "Please enter your email in correct format";
+      setError(errorMsg);
+      toast.error(errorMsg);
       return;
     }
 
@@ -41,8 +45,9 @@ function ButtonContent({ email }: ButtonProps) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email }),
+        
       });
-
+       
       const data = await response.json();
 
       if (response.status === 409) {
@@ -78,8 +83,7 @@ function ButtonContent({ email }: ButtonProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email,
+        body: JSON.stringify({ 
           name: name || undefined,
           location: city || undefined,
         }),

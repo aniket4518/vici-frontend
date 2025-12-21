@@ -5,7 +5,9 @@ import Image from "next/image";
 import React from "react";
 import Button from "./components/Button";
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
-export default function Home() {
+import { InputSchema } from "./zod/input";
+
+export default function HomePage() {
   const ropeRef = useRef<SVGPathElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const blackCurtainRef = useRef<HTMLDivElement>(null);
@@ -13,8 +15,10 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [currentSlide, setCurrentSlide] = useState(0);
   const [waitlistCount, setWaitlistCount] = useState(0);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const images = ["/1.png", "/2.png", "/3.png", "/4.png", "/5.png", "/6.png"];
-  
+
   const people = [
     {
       id: 1,
@@ -161,10 +165,42 @@ export default function Home() {
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Email submitted:", email);
-    // Add your waitlist submission logic here
+    setError(null);
+    setSuccess(null);
+    // Frontend Zod validation
+    const result = InputSchema.safeParse({ email });
+    if (!result.success) {
+      const messages = result.error.issues.map(issue => issue.message).join("; ");
+      setError(messages || "Please input valid mail");
+      return;
+    }
+    // Send to backend
+    try {
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (response.status === 409) {
+        setError("User already exists");
+        return;
+      }
+      if (response.status === 400) {
+        const data = await response.json();
+        setError(data.error || "Please input valid mail");
+        return;
+      }
+      if (!response.ok) {
+        setError("Something went wrong. Please try again.");
+        return;
+      }
+      setSuccess("Successfully joined waitlist!");
+      setEmail("");
+    } catch (err) {
+      setError("Network error. Please try again.");
+    }
   };
 
   return (
@@ -225,6 +261,7 @@ export default function Home() {
        
 
         {/* Email Form */}
+        
         <form className="email-form" onSubmit={handleSubmit} style={{ position: 'relative', zIndex: 10 }}>
           <input
             type="email"
@@ -236,6 +273,12 @@ export default function Home() {
             required
           />
           <Button email={email} />
+          {error && (
+            <div style={{ color: 'red', marginTop: 8 }}>{error}</div>
+          )}
+          {success && (
+            <div style={{ color: 'green', marginTop: 8 }}>{success}</div>
+          )}
         </form>
          <div className="social-proof scale-75 md:scale-100" style={{ position: 'relative', zIndex: 1 }}>
           <div className="flex items-center justify-center">
@@ -294,8 +337,9 @@ export default function Home() {
  
 
   );
-
 }
+
+// ...existing code...
 
 /**
  * ROPE ANIMATION EXPLAINED:
