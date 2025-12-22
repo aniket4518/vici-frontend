@@ -184,7 +184,7 @@ export default function HomePage() {
         body: JSON.stringify({ email }),
       });
       if (response.status === 409) {
-        setError("User already exists");
+       
         return;
       }
       if (response.status === 400) {
