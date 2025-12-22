@@ -273,9 +273,7 @@ export default function HomePage() {
             required
           />
           <Button email={email} />
-          {error && (
-            <div style={{ color: 'red', marginTop: 8 }}>{error}</div>
-          )}
+          {/* Error message removed as per request */}
           {success && (
             <div style={{ color: 'green', marginTop: 8 }}>{success}</div>
           )}

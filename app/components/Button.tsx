@@ -84,6 +84,7 @@ function ButtonContent({ email }: ButtonProps) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ 
+          email, // Always include email for backend validation
           name: name || undefined,
           location: city || undefined,
         }),
