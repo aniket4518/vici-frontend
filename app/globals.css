@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --neon-green: #B4FF39;
+  --neon-green: #F43628;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.13 0.028 261.692);
@@ -59,7 +59,7 @@ body {
   position: relative;
   width: 100vw;
   min-height: 100vh;
-  background: #F8F7F5;
+  background: #ffffff;
   background-image: radial-gradient(circle, #00000024 1.5px, transparent 1.5px);
   background-size: 30px 30px;
   display: flex;
@@ -84,24 +84,28 @@ body {
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: 800;
+  font-size: 2rem;
+  font-weight: 900;
   color: #000;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 .contact-btn {
   background: transparent;
   border: none;
   color: #000;
-  font-size: 1rem;
-  font-weight: 400;
+  font-size: 2rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, transform 0.2s;
+  white-space: nowrap;
+  text-decoration: none;
+  transform: translateY(-4px); /* moved a little up */
 }
 
 .contact-btn:hover {
   opacity: 0.6;
+  transform: translateY(-5px); /* tiny hover lift */
 }
 
 /* Rope SVG positioning */
@@ -238,23 +242,25 @@ body {
   transform: translateY(0);
 }
 
-/* Footer */
-.footer {
-  position: absolute;
-  bottom: 2rem;
-  right: 3rem;
-  font-size: 0.875rem;
-  color: #666;
-  z-index: 10;
-}
-
 /* ====================
    RESPONSIVE DESIGN
    ==================== */
 
 @media (max-width: 768px) {
   .header {
-    padding: 1.5rem 2rem;
+    padding: 1.5rem 1.5rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .logo-image {
+    width: 110px;
+  }
+
+  .contact-btn {
+    font-size: 1.5rem;
   }
 
   .main-content {
@@ -282,12 +288,6 @@ body {
     width: 100%;
   }
 
-  .footer {
-    bottom: 1.5rem;
-    right: 2rem;
-    font-size: 0.75rem;
-  }
-
   /* Adjust rope on mobile */
   .rope-svg {
     transform: scale(1.1);
@@ -295,17 +295,24 @@ body {
 }
 
 @media (max-width: 480px) {
+  .header {
+    padding: 1rem 1rem;
+  }
+
   .main-title {
     font-size: 2.5rem;
   }
 
   .logo {
-    font-size: 1rem;
-    font-weight: 800;
+    font-size: 1.25rem;
+  }
+
+  .logo-image {
+    width: 90px;
   }
 
   .contact-btn {
-    font-size: 0.9rem;
+    font-size: 1.25rem;
   }
 }
 

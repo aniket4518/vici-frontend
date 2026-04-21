@@ -5,7 +5,8 @@ import Image from "next/image";
 import React from "react";
 import Button from "./components/Button";
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
-import { InputSchema } from "./zod/input";
+import { waitlistEmailSchema } from "@/lib/validators/waitlist";
+import phoneImage from "../public/phone.png";
 
 export default function HomePage() {
   const ropeRef = useRef<SVGPathElement>(null);
@@ -170,7 +171,7 @@ export default function HomePage() {
     setError(null);
     setSuccess(null);
     // Frontend Zod validation
-    const result = InputSchema.safeParse({ email });
+    const result = waitlistEmailSchema.safeParse({ email });
     if (!result.success) {
       const messages = result.error.issues.map(issue => issue.message).join("; ");
       setError(messages || "Please input valid mail");
@@ -214,8 +215,8 @@ export default function HomePage() {
 
       {/* Header */}
       <header className="header">
-        <div className="logo ">vici.</div>
-        <button className="contact-btn">Contact</button>
+        <div className="logo ">daur.</div>
+        <a href="https://x.com/daurapp" target="_blank" rel="noopener noreferrer" className="contact-btn">Contact</a>
       </header>
 
       {/* SVG Rope Animation - Neon Green */}
@@ -286,13 +287,13 @@ export default function HomePage() {
         </div>
       
       {/* Phone Image - Center Bottom */}
-      <div className="fixed left-1/2 transform -translate-x-1/2 z-[5] bottom-28 md:bottom-0" style={{ pointerEvents: 'none' }}>
+      <div className="fixed left-1/2 transform -translate-x-1/2 z-[5] bottom-22 md:bottom-0" style={{ pointerEvents: 'none' }}>
         <Image
-          src="/phone.png"
+          src={phoneImage}
           alt="Phone"
           width={280}
           height={200}
-          className="object-contain relative top-67 "
+          className="object-contain relative top-55 "
         />
       </div>
      
@@ -319,8 +320,6 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="footer">© vici 2025</footer>
       <div className="flex items-center justify-center">
      
     </div>

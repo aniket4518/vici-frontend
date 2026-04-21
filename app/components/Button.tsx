@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from "next/image";
 import {
   Modal,
   ModalBody,
@@ -8,7 +9,7 @@ import {
   useModal,
 } from "@/components/ui/shadcn-io/animated-modal";
 import toast, { Toaster } from "react-hot-toast";
-import {InputSchema}from "../zod/input"
+import { waitlistEmailSchema } from "@/lib/validators/waitlist";
 
 interface ButtonProps {
   email: string;
@@ -27,7 +28,7 @@ function ButtonContent({ email }: ButtonProps) {
   };
   
   const handleJoinWaitlist = async () => {
-    const parsedinput = InputSchema.safeParse({ email });
+    const parsedinput = waitlistEmailSchema.safeParse({ email });
     if (!parsedinput.success) {
       const errorMsg = parsedinput.error.issues.map(issue => issue.message).join("; ") || "Please enter your email in correct format";
       setError(errorMsg);
@@ -121,8 +122,8 @@ function ButtonContent({ email }: ButtonProps) {
       <ModalBody>
         <ModalContent>
           <div className="flex flex-col items-center justify-center w-full">
-            <h4 className="text-lg md:text-2xl text-black font-bold text-center" style={{ marginBottom: '8px' }}>
-              vici
+            <h4 className="text-2xl md:text-4xl text-black font-black text-center" style={{ marginBottom: '8px' }}>
+              daur.
             </h4>
             
             <p className="text-sm text-neutral-600 text-center" style={{ marginBottom: '32px' }}>

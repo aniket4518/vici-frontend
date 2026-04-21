@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { InputSchema } from "../zod/input";
+import { waitlistEmailSchema } from "@/lib/validators/waitlist";
 
-  export async function POST(request: NextRequest) {
-    try {
-      const body = await request.json();
-      // Validate with Zod
-      const result = InputSchema.safeParse(body);
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    // Validate with Zod
+    const result = waitlistEmailSchema.safeParse(body);
     if (!result.success) {
       return NextResponse.json(
         { error: result.error.issues[0]?.message || "Invalid input" },
-        { status: 400 }
+        { status: 400 },
       );
     }
     const { email } = result.data;
@@ -23,7 +23,7 @@ import { InputSchema } from "../zod/input";
     if (existingUser) {
       return NextResponse.json(
         { error: "Email already registered" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -36,13 +36,13 @@ import { InputSchema } from "../zod/input";
 
     return NextResponse.json(
       { message: "Successfully joined waitlist", user },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Error adding to waitlist:", error);
     return NextResponse.json(
       { error: "Failed to join waitlist" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
