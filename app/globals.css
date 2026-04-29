@@ -84,28 +84,29 @@ body {
 }
 
 .logo {
-  font-size: 2rem;
+  font-size: clamp(1.25rem, 3vw, 2rem);
   font-weight: 900;
   color: #000;
   letter-spacing: -0.02em;
+  line-height: 1;
 }
 
 .contact-btn {
   background: transparent;
   border: none;
   color: #000;
-  font-size: 1rem;
+  font-size: clamp(0.8rem, 2vw, 1rem);
   font-weight: 600;
   cursor: pointer;
   transition: opacity 0.2s, transform 0.2s;
   white-space: nowrap;
   text-decoration: none;
-  transform: translateY(-4px); /* moved a little up */
+  /* removed translateY offset so it aligns with the logo */
 }
 
 .contact-btn:hover {
   opacity: 0.6;
-  transform: translateY(-5px); /* tiny hover lift */
+  transform: translateY(-2px);
 }
 
 /* Rope SVG positioning */
@@ -248,19 +249,11 @@ body {
 
 @media (max-width: 768px) {
   .header {
-    padding: 1.5rem 1.5rem;
-  }
-
-  .logo {
-    font-size: 1.5rem;
+    padding: 1.25rem 1.5rem;
   }
 
   .logo-image {
     width: 110px;
-  }
-
-  .contact-btn {
-    font-size: 1.5rem;
   }
 
   .main-content {
@@ -303,16 +296,8 @@ body {
     font-size: 2.5rem;
   }
 
-  .logo {
-    font-size: 1.25rem;
-  }
-
   .logo-image {
     width: 90px;
-  }
-
-  .contact-btn {
-    font-size: 1.25rem;
   }
 }
 
