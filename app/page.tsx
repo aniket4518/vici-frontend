@@ -109,7 +109,7 @@ export default function HomePage() {
       rope,
       {
         attr: {
-          // Subtle y-axis variation for organic feel
+          
           d: `
             M 0 800
             C 150 700, 250 600, 400 650
