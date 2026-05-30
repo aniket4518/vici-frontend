@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Daur",
+  title: "Terms of Service | Daur",
   description:
-    "Read the Daur Privacy Policy to understand how we collect, use, and protect your personal information.",
+    "Read the Daur Terms of Service to understand the rules and guidelines governing your use of our platform.",
 };
 
-export default function PrivacyPolicyPage() {
+export default function TermsOfServicePage() {
   return (
     <main
       style={{
@@ -28,13 +29,30 @@ export default function PrivacyPolicyPage() {
           flexDirection: "column",
         }}
       >
+        {/* ── Back button ── */}
+        <Link
+          href="/"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "6px",
+            fontSize: "14px",
+            fontFamily: "Arial, Helvetica, sans-serif",
+            color: "#3030F1",
+            textDecoration: "none",
+            marginBottom: "12px",
+          }}
+        >
+          ← Back to Home
+        </Link>
+
         {/* 
           We use an iframe pointing to our API route that serves the raw HTML
-          from privacypolicy.md. This avoids React hydration errors, 
-          Tailwind/global CSS conflicts, and iframe srcDoc CSP issues. 
+          from termsofservice.md. This matches the privacy policy approach,
+          avoiding React hydration errors and CSS conflicts.
         */}
         <iframe
-          src="/api/policy"
+          src="/api/terms"
           style={{
             width: "100%",
             flexGrow: 1,
@@ -42,7 +60,7 @@ export default function PrivacyPolicyPage() {
             border: "none",
             backgroundColor: "#ffffff",
           }}
-          title="Privacy Policy"
+          title="Terms of Service"
         />
       </div>
     </main>
