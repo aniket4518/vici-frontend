@@ -216,7 +216,7 @@ export default function HomePage() {
       {/* Header */}
       <header className="header">
         <div className="logo ">daur.</div>
-        <a href="https://x.com/daurapp" target="_blank" rel="noopener noreferrer" className="contact-btn">Contact</a>
+        <a href="mailto:contact.daur@gmail.com" className="contact-btn">Contact</a>
       </header>
 
       {/* SVG Rope Animation - Neon Green */}
