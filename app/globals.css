@@ -243,6 +243,101 @@ body {
   transform: translateY(0);
 }
 
+/* Store Buttons */
+.store-buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.store-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.store-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #000;
+  color: #fff;
+  border: 1.5px solid #3a3a3a;
+  border-radius: 12px;
+  padding: 0.65rem 1.25rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+  min-width: 180px;
+}
+
+.store-btn:hover {
+  background: #1a1a1a;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  border-color: #555;
+}
+
+.store-btn:active {
+  transform: translateY(-1px);
+}
+
+.store-btn-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.store-btn-label {
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  line-height: 1.2;
+}
+
+.store-btn-name {
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+/* Back to stores button */
+.back-to-stores {
+  background: none;
+  border: none;
+  color: #000;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  transition: opacity 0.2s;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.back-to-stores:hover {
+  opacity: 0.6;
+}
+
+/* Waitlist notification note */
+.waitlist-note {
+  font-size: 0.95rem;
+  color: #444;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  position: relative;
+  z-index: 10;
+}
+
 /* ====================
    RESPONSIVE DESIGN
    ==================== */
@@ -285,6 +380,19 @@ body {
   .rope-svg {
     transform: scale(1.1);
   }
+
+  .store-buttons {
+    gap: 0.75rem;
+  }
+
+  .store-btn {
+    min-width: 160px;
+    padding: 0.55rem 1rem;
+  }
+
+  .store-btn-name {
+    font-size: 1.05rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -298,6 +406,21 @@ body {
 
   .logo-image {
     width: 90px;
+  }
+
+  .store-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .store-btn {
+    width: 100%;
+    max-width: 220px;
+    justify-content: center;
+  }
+
+  .store-btn-name {
+    font-size: 1rem;
   }
 }
 

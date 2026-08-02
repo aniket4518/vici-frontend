@@ -18,26 +18,51 @@ export default function HomePage() {
   const [waitlistCount, setWaitlistCount] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [showWaitlist, setShowWaitlist] = useState(false);
   const images = ["/1.png", "/2.png", "/3.png", "/4.png", "/5.png", "/6.png"];
 
   const people = [
     {
       id: 1,
-      
+      name: "John Doe",
       designation: "Runner",
-      image: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80",
     },
     {
       id: 2,
-    
+      name: "Robert Johnson",
       designation: "Walker",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
     },
     {
       id: 3,
-       
+      name: "Jane Smith",
       designation: "Explorer",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+    },
+    {
+      id: 4,
+      name: "Emily Davis",
+      designation: "Marathoner",
+      image:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    },
+    {
+      id: 5,
+      name: "Tyler Durden",
+      designation: "Sprinter",
+      image:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80",
+    },
+    {
+      id: 6,
+      name: "Dora",
+      designation: "Trail Runner",
+      image:
+        "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3534&q=80",
     },
   ];
 
@@ -89,6 +114,10 @@ export default function HomePage() {
       y: "-100%",
       duration: 1.2,
       ease: "power2.inOut",
+      onComplete: () => {
+        curtain.style.pointerEvents = "none";
+        curtain.style.visibility = "hidden";
+      },
     });
 
     // Animate the rope: draw the stroke progressively
@@ -210,7 +239,7 @@ export default function HomePage() {
       <div 
         ref={blackCurtainRef}
         className="fixed inset-0 z-50"
-        style={{ backgroundColor: '#EAFF56' }}
+        style={{ backgroundColor: '#EAFF56', pointerEvents: 'none' }}
       />
 
       {/* Header */}
@@ -261,30 +290,78 @@ export default function HomePage() {
       </div>
        
 
-        {/* Email Form */}
-        
-        <form className="email-form" onSubmit={handleSubmit} style={{ position: 'relative', zIndex: 10 }}>
-          <input
-            type="email"
-            placeholder="Email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="email-input"
-            style={{ position: 'relative', zIndex: 10, pointerEvents: 'auto' }}
-            required
-          />
-          <Button email={email} />
-          {/* Error message removed as per request */}
-          {success && (
-            <div style={{ color: 'green', marginTop: 8 }}>{success}</div>
-          )}
-        </form>
-         <div className="social-proof scale-75 md:scale-100" style={{ position: 'relative', zIndex: 1 }}>
-          <div className="flex items-center justify-center">
-            <AnimatedTooltip items={people} />
+        {/* Store Buttons / Waitlist */}
+        {!showWaitlist ? (
+          <div className="store-buttons-container" style={{ position: 'relative', zIndex: 10 }}>
+            <div className="store-buttons">
+              {/* Google Play Store */}
+              <a
+                href="https://play.google.com/store/apps/details?id=com.daur.daurapp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="store-btn"
+                id="google-play-btn"
+              >
+                <svg viewBox="0 0 512 512" width="24" height="24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
+                </svg>
+                <div className="store-btn-text">
+                  <span className="store-btn-label">GET IT ON</span>
+                  <span className="store-btn-name">Google Play</span>
+                </div>
+              </a>
+
+              {/* Apple App Store */}
+              <button
+                onClick={() => setShowWaitlist(true)}
+                className="store-btn"
+                id="app-store-btn"
+              >
+                <svg viewBox="0 0 384 512" width="22" height="22" fill="white" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-74.3-19.7C63.1 141.2 4 184.8 4 273.5c0 26.2 4.8 53.3 14.4 81.2 12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-62.1 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+                </svg>
+                <div className="store-btn-text">
+                  <span className="store-btn-label">COMING SOON ON</span>
+                  <span className="store-btn-name">App Store</span>
+                </div>
+              </button>
+            </div>
           </div>
-          <span className="join-text">Join +{waitlistCount} others</span>
-        </div>
+        ) : (
+          <>
+            <button
+              onClick={() => setShowWaitlist(false)}
+              className="back-to-stores"
+              style={{ position: 'relative', zIndex: 10 }}
+            >
+              ← Back
+            </button>
+            <p className="waitlist-note">
+              We’ll notify you as soon as we’re live on iOS
+            </p>
+            <form className="email-form" onSubmit={handleSubmit} style={{ position: 'relative', zIndex: 10 }}>
+              <input
+                type="email"
+                placeholder="Email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="email-input"
+                style={{ position: 'relative', zIndex: 10, pointerEvents: 'auto' }}
+                required
+              />
+              <Button email={email} />
+              {success && (
+                <div style={{ color: 'green', marginTop: 8 }}>{success}</div>
+              )}
+            </form>
+            <div className="social-proof scale-75 md:scale-100" style={{ position: 'relative', zIndex: 1 }}>
+              <div className="flex items-center justify-center">
+                <AnimatedTooltip items={people} />
+              </div>
+              <span className="join-text">Join +{waitlistCount} others</span>
+            </div>
+          </>
+        )}
       
       {/* Phone Image - Center Bottom */}
       <div className="fixed left-1/2 transform -translate-x-1/2 z-[5] bottom-22 md:bottom-0" style={{ pointerEvents: 'none' }}>
