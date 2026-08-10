@@ -112,8 +112,7 @@ function ButtonContent({ email }: ButtonProps) {
       <Toaster position="top-center" />
       <div className="flex items-center justify-center">
         <button 
-        className="bg-black dark:bg-white text-md dark:text-black text-white rounded-full disabled:opacity-80 disabled:cursor-not-allowed"  
-        style={{ padding: '0.75rem 2rem' }}
+        className="join-waitlist-btn bg-black dark:bg-white dark:text-black text-white rounded-full disabled:opacity-80 disabled:cursor-not-allowed"
         onClick={handleJoinWaitlist}
         disabled={!email || isLoading}
       >

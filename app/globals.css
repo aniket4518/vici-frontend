@@ -129,6 +129,34 @@ body {
   margin-top: -12rem;
 }
 
+/* NOTE: deliberately no `max-height` media queries here. On phones the visible
+   viewport height changes as the URL bar shows/hides, so height-based tiers
+   flip in and out mid-scroll and visibly resize the type and spacing. */
+
+/* The waitlist panel is taller than the store buttons, so the phone art steps
+   down while it's open and glides back when you hit Back. Driven by which
+   panel is open rather than by viewport size, so it never changes on its own.
+   Both rules drop it by the same 88px — they differ only because the base is
+   `bottom-22` below 768px and `bottom-0` above. */
+.phone-art {
+  transition: bottom 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Next/Image scales this art with viewport width, so on narrow screens it
+   renders shorter — and because it's bottom-anchored, a shorter image means a
+   lower top edge. At 390px it sat ~81px lower than at 480px. This cancels that
+   drift so the art holds its 480px position all the way down. Width-based, so
+   it can't flip on its own; `max()` clamps it to lift-only above 480px. */
+.phone-art.is-waitlist {
+  bottom: max(0px, calc((480px - 100vw) * 0.9));
+}
+
+@media (min-width: 768px) {
+  .phone-art.is-waitlist {
+    bottom: -5.5rem;
+  }
+}
+
 /* Main Title - Bold Italic */
 .main-title {
   font-size: clamp(3rem, 10vw, 7rem);
@@ -154,13 +182,92 @@ body {
   text-align: center;
 }
 
+/* ====================
+   CTA STAGE (store buttons <-> waitlist cross-fade)
+   ==================== */
+
+/* Fixed-height stage keeps the hero from re-centering when the panel swaps,
+   so nothing above or below shifts during the transition. */
+.cta-stage {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 560px;
+  min-height: 178px;
+  margin-top: 1.75rem;
+}
+
+/* NOTE: no transform on the panel itself — the waitlist modal is position:fixed
+   and a transformed ancestor would turn it into a containing block. */
+.cta-panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Top-anchored, not centered: the reserved height exists only to stop the
+     hero re-centering on swap. Centering would push the short store-button
+     panel into the middle of that box and open a gap under the subtitle. */
+  justify-content: flex-start;
+  gap: 0.7rem;
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s linear 0.45s;
+}
+
+.cta-panel.is-active {
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+/* Children fade + rise individually so the panel enters with a soft stagger */
+.cta-panel > * {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* `none` rather than translateY(0) — a settled transform would still create a
+   containing block for the fixed-position modal. */
+.cta-panel.is-active > * {
+  opacity: 1;
+  transform: none;
+}
+
+.cta-panel.is-active > *:nth-child(1) { transition-delay: 0.10s; }
+.cta-panel.is-active > *:nth-child(2) { transition-delay: 0.16s; }
+.cta-panel.is-active > *:nth-child(3) { transition-delay: 0.22s; }
+.cta-panel.is-active > *:nth-child(4) { transition-delay: 0.28s; }
+.cta-panel.is-active > *:nth-child(5) { transition-delay: 0.34s; }
+
 /* Social Proof */
 .social-proof {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  margin-bottom: 1rem;
+  margin-top: 0.25rem;
+}
+
+.social-proof-avatars {
+  display: flex;
+  align-items: center;
+}
+
+/* The tooltip items each carry an inline -12px right margin for the overlap;
+   cancel it on the last one so "Join +N others" keeps its gap. */
+.social-proof-avatars > div:last-child {
+  margin-right: 0 !important;
+}
+
+.waitlist-success {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #14803c;
+  text-align: center;
 }
 
 .avatars {
@@ -192,31 +299,54 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
-  max-width: 600px;
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 420px;
 }
 
 .email-input {
-  flex: 1;
-  padding: 0.6rem 1rem;
-  border: 1px solid #E0E0E0;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 44px;
+  padding: 0 1.15rem;
+  border: 1px solid #e2e2e2;
   border-radius: 50px;
   background: #fff;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-family: var(--font-inter), sans-serif;
   color: #000;
   outline: none;
-  transition: all 0.2s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .email-input::placeholder {
-  color: #999;
+  color: #9a9a9a;
 }
 
 .email-input:focus {
   border-color: #000;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+/* Matches .email-input height exactly so the row reads as one control */
+.join-waitlist-btn {
+  height: 44px;
+  padding: 0 1.6rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.16),
+    0 6px 16px -8px rgba(0, 0, 0, 0.4);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.join-waitlist-btn:not(:disabled):hover {
+  background: #1c1c1e;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.18),
+    0 12px 24px -12px rgba(0, 0, 0, 0.45);
 }
 
 .submit-btn {
@@ -243,106 +373,140 @@ body {
   transform: translateY(0);
 }
 
-/* Store Buttons */
-.store-buttons-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
+/* Store Buttons — always side by side, equal width, equal height */
 .store-buttons {
   display: flex;
-  gap: 1rem;
+  flex-wrap: nowrap;
+  gap: 0.65rem;
   align-items: stretch;
   justify-content: center;
-  flex-wrap: wrap;
+  width: 100%;
 }
 
+/* Both labels measure ~72px, so an equal 144px basis sits snug around the
+   content instead of leaving slack on the right. */
 .store-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 144px;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  background: #000;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(180deg, #1d1d1f 0%, #000 100%);
   color: #fff;
-  border: 1.5px solid #3a3a3a;
-  border-radius: 12px;
-  padding: 0.65rem 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 11px;
+  padding: 0.45rem 0.7rem;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.16),
+    0 6px 16px -8px rgba(0, 0, 0, 0.4);
+  transition:
+    background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    translate 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
-  min-width: 180px;
 }
 
+/* `translate` instead of `transform` so it doesn't fight the panel stagger */
 .store-btn:hover {
-  background: #1a1a1a;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-  border-color: #555;
+  background: linear-gradient(180deg, #2c2c2e 0%, #0a0a0a 100%);
+  translate: 0 -2px;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.18),
+    0 14px 28px -12px rgba(0, 0, 0, 0.45);
+  border-color: rgba(255, 255, 255, 0.26);
 }
 
 .store-btn:active {
-  transform: translateY(-1px);
+  translate: 0 0;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.16),
+    0 4px 10px -8px rgba(0, 0, 0, 0.4);
+}
+
+/* Fixed-width icon slot keeps both labels starting on the same x-axis */
+.store-btn-icon {
+  flex-shrink: 0;
+  width: 19px;
+  height: 19px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Match icons by height so the two glyphs read as the same optical size */
+.store-btn-icon svg {
+  height: 100%;
+  width: auto;
 }
 
 .store-btn-text {
   display: flex;
   flex-direction: column;
   text-align: left;
+  min-width: 0;
 }
 
 .store-btn-label {
-  font-size: 0.6rem;
+  font-size: 0.52rem;
   font-weight: 400;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   opacity: 0.85;
-  line-height: 1.2;
+  line-height: 1.3;
+  white-space: nowrap;
 }
 
 .store-btn-name {
-  font-size: 1.15rem;
+  font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.3;
   letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
 /* Back to stores button */
 .back-to-stores {
-  background: none;
-  border: none;
-  color: #000;
-  font-size: 0.875rem;
+  border: 1px solid #e6e6e6;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  color: #333;
+  font-size: 0.78rem;
   font-weight: 500;
+  letter-spacing: -0.01em;
   cursor: pointer;
-  margin-bottom: 0.25rem;
-  padding: 0.25rem 0.5rem;
-  transition: opacity 0.2s;
+  padding: 0.3rem 0.9rem;
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+/* opacity/transform are driven by the panel stagger, so only tint on hover */
 .back-to-stores:hover {
-  opacity: 0.6;
+  background: #fff;
+  border-color: #c9c9c9;
+  color: #000;
 }
 
 /* Waitlist notification note */
 .waitlist-note {
-  font-size: 0.95rem;
-  color: #444;
+  font-size: 0.9rem;
+  color: #5a5a5a;
   text-align: center;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
+  font-weight: 450;
   letter-spacing: -0.01em;
-  position: relative;
-  z-index: 10;
 }
 
 /* ====================
    RESPONSIVE DESIGN
    ==================== */
 
-@media (max-width: 768px) {
+/* 767, not 768 — Tailwind's `md:` is min-width 768, so overlapping at exactly
+   768px gave that width the stacked mobile form *and* the desktop art offset. */
+@media (max-width: 767px) {
   .header {
     padding: 1.25rem 1.5rem;
   }
@@ -365,15 +529,28 @@ body {
     margin-bottom: 1.5rem;
   }
 
+  .cta-stage {
+    min-height: 224px;
+    max-width: 340px;
+    margin-top: 1.25rem;
+  }
+
   .email-form {
     flex-direction: column;
     width: 100%;
-    gap: 0.75rem;
+    gap: 0.55rem;
   }
 
+  /* Stack the input and the "Join waitlist" button at equal width so the
+     column stays visually aligned. */
   .email-input,
-  .submit-btn {
+  .email-form > div,
+  .join-waitlist-btn {
     width: 100%;
+  }
+
+  .waitlist-note {
+    font-size: 0.82rem;
   }
 
   /* Adjust rope on mobile */
@@ -381,17 +558,37 @@ body {
     transform: scale(1.1);
   }
 
+  /* Smaller avatars instead of a transform scale, so the row keeps its
+     real height and the block below it doesn't drift. */
+  .social-proof {
+    gap: 0.6rem;
+  }
+
+  .social-proof-avatars img {
+    height: 1.85rem;
+    width: 1.85rem;
+  }
+
+  .join-text {
+    font-size: 0.78rem;
+  }
+
   .store-buttons {
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
 
   .store-btn {
-    min-width: 160px;
-    padding: 0.55rem 1rem;
+    max-width: 136px;
+    padding: 0.42rem 0.55rem;
+    gap: 0.45rem;
   }
 
   .store-btn-name {
-    font-size: 1.05rem;
+    font-size: 0.88rem;
+  }
+
+  .store-btn-label {
+    font-size: 0.48rem;
   }
 }
 
@@ -408,19 +605,29 @@ body {
     width: 90px;
   }
 
-  .store-buttons {
-    flex-direction: column;
-    align-items: center;
+  .cta-stage {
+    max-width: 300px;
+    min-height: 240px;
   }
 
+  /* Buttons stay side by side. max-width caps growth but never blocks
+     flex-shrink, so they narrow on their own below ~360px. */
   .store-btn {
-    width: 100%;
-    max-width: 220px;
-    justify-content: center;
+    padding: 0.4rem 0.5rem;
+    gap: 0.4rem;
+  }
+
+  .store-btn-icon {
+    width: 17px;
+    height: 17px;
   }
 
   .store-btn-name {
-    font-size: 1rem;
+    font-size: 0.8rem;
+  }
+
+  .store-btn-label {
+    font-size: 0.45rem;
   }
 }
 
