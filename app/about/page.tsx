@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function AboutPage() {
-  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const sectionRefs = useRef<(HTMLElement | null)[]>([]);
 
   /* ─── reveal sections on scroll ─── */
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function AboutPage() {
 
 
 
-  function addRef(el: HTMLDivElement | null, idx: number) {
+  function addRef(el: HTMLElement | null, idx: number) {
     sectionRefs.current[idx] = el;
   }
 
