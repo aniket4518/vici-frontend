@@ -18,3 +18,15 @@ model User{
   email String @unique
   location String? 
 }
+
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  firstName String
+  lastName  String?
+  email     String
+  phone     String?
+  subject   String?
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

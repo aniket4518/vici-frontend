@@ -115,7 +115,7 @@ export default function AboutPage() {
         <Link href="/" className="logo">daur.</Link>
         <nav className="about-nav">
           <Link href="/" className="contact-btn">Home</Link>
-          <a href="mailto:contact.daur@gmail.com" className="contact-btn">Contact</a>
+          <Link href="/contact" className="contact-btn">Contact</Link>
         </nav>
       </header>
 
@@ -242,7 +242,7 @@ export default function AboutPage() {
           <div className="about-footer-links">
             <Link href="/privacy-policy">Privacy</Link>
             <Link href="/terms-of-service">Terms</Link>
-            <a href="mailto:contact.daur@gmail.com">Contact</a>
+            <Link href="/contact">Contact</Link>
           </div>
           <p className="about-footer-copy">© {new Date().getFullYear()} Daur. All rights reserved.</p>
         </div>
