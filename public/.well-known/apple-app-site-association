@@ -1,0 +1,26 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": [
+          "<APPLE_TEAM_ID>.com.daur.daurapp",
+          "<APPLE_TEAM_ID>.com.daur.daurapp.preview",
+          "<APPLE_TEAM_ID>.com.daur.daurapp.dev"
+        ],
+        "components": [
+          { "/": "/post/*", "comment": "Shared activity posts" },
+          { "/": "/user/*", "comment": "Shared user profiles" },
+          { "/": "/teams/*", "comment": "Shared teams" }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "<APPLE_TEAM_ID>.com.daur.daurapp",
+      "<APPLE_TEAM_ID>.com.daur.daurapp.preview",
+      "<APPLE_TEAM_ID>.com.daur.daurapp.dev"
+    ]
+  }
+}
