@@ -133,30 +133,6 @@ body {
    viewport height changes as the URL bar shows/hides, so height-based tiers
    flip in and out mid-scroll and visibly resize the type and spacing. */
 
-/* The waitlist panel is taller than the store buttons, so the phone art steps
-   down while it's open and glides back when you hit Back. Driven by which
-   panel is open rather than by viewport size, so it never changes on its own.
-   Both rules drop it by the same 88px — they differ only because the base is
-   `bottom-22` below 768px and `bottom-0` above. */
-.phone-art {
-  transition: bottom 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Next/Image scales this art with viewport width, so on narrow screens it
-   renders shorter — and because it's bottom-anchored, a shorter image means a
-   lower top edge. At 390px it sat ~81px lower than at 480px. This cancels that
-   drift so the art holds its 480px position all the way down. Width-based, so
-   it can't flip on its own; `max()` clamps it to lift-only above 480px. */
-.phone-art.is-waitlist {
-  bottom: max(0px, calc((480px - 100vw) * 0.9));
-}
-
-@media (min-width: 768px) {
-  .phone-art.is-waitlist {
-    bottom: -5.5rem;
-  }
-}
-
 /* Main Title - Bold Italic */
 .main-title {
   font-size: clamp(3rem, 10vw, 7rem);
@@ -183,65 +159,20 @@ body {
 }
 
 /* ====================
-   CTA STAGE (store buttons <-> waitlist cross-fade)
+   CTA STAGE (store buttons + social proof)
    ==================== */
 
-/* Fixed-height stage keeps the hero from re-centering when the panel swaps,
-   so nothing above or below shifts during the transition. */
 .cta-stage {
   position: relative;
   z-index: 10;
   width: 100%;
   max-width: 560px;
-  min-height: 178px;
   margin-top: 1.75rem;
-}
-
-/* NOTE: no transform on the panel itself — the waitlist modal is position:fixed
-   and a transformed ancestor would turn it into a containing block. */
-.cta-panel {
-  position: absolute;
-  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Top-anchored, not centered: the reserved height exists only to stop the
-     hero re-centering on swap. Centering would push the short store-button
-     panel into the middle of that box and open a gap under the subtitle. */
-  justify-content: flex-start;
   gap: 0.7rem;
-  visibility: hidden;
-  pointer-events: none;
-  transition: visibility 0s linear 0.45s;
 }
-
-.cta-panel.is-active {
-  visibility: visible;
-  pointer-events: auto;
-  transition-delay: 0s;
-}
-
-/* Children fade + rise individually so the panel enters with a soft stagger */
-.cta-panel > * {
-  opacity: 0;
-  transform: translateY(10px);
-  transition:
-    opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* `none` rather than translateY(0) — a settled transform would still create a
-   containing block for the fixed-position modal. */
-.cta-panel.is-active > * {
-  opacity: 1;
-  transform: none;
-}
-
-.cta-panel.is-active > *:nth-child(1) { transition-delay: 0.10s; }
-.cta-panel.is-active > *:nth-child(2) { transition-delay: 0.16s; }
-.cta-panel.is-active > *:nth-child(3) { transition-delay: 0.22s; }
-.cta-panel.is-active > *:nth-child(4) { transition-delay: 0.28s; }
-.cta-panel.is-active > *:nth-child(5) { transition-delay: 0.34s; }
 
 /* Social Proof */
 .social-proof {
@@ -411,7 +342,6 @@ body {
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* `translate` instead of `transform` so it doesn't fight the panel stagger */
 .store-btn:hover {
   background: linear-gradient(180deg, #2c2c2e 0%, #0a0a0a 100%);
   translate: 0 -2px;
@@ -469,37 +399,6 @@ body {
   white-space: nowrap;
 }
 
-/* Back to stores button */
-.back-to-stores {
-  border: 1px solid #e6e6e6;
-  border-radius: 50px;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(6px);
-  color: #333;
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  cursor: pointer;
-  padding: 0.3rem 0.9rem;
-  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-/* opacity/transform are driven by the panel stagger, so only tint on hover */
-.back-to-stores:hover {
-  background: #fff;
-  border-color: #c9c9c9;
-  color: #000;
-}
-
-/* Waitlist notification note */
-.waitlist-note {
-  font-size: 0.9rem;
-  color: #5a5a5a;
-  text-align: center;
-  font-weight: 450;
-  letter-spacing: -0.01em;
-}
-
 /* ====================
    RESPONSIVE DESIGN
    ==================== */
@@ -530,7 +429,6 @@ body {
   }
 
   .cta-stage {
-    min-height: 224px;
     max-width: 340px;
     margin-top: 1.25rem;
   }
@@ -547,10 +445,6 @@ body {
   .email-form > div,
   .join-waitlist-btn {
     width: 100%;
-  }
-
-  .waitlist-note {
-    font-size: 0.82rem;
   }
 
   /* Adjust rope on mobile */
@@ -607,7 +501,6 @@ body {
 
   .cta-stage {
     max-width: 300px;
-    min-height: 240px;
   }
 
   /* Buttons stay side by side. max-width caps growth but never blocks
@@ -1013,11 +906,6 @@ body {
 
 .about-store-buttons .store-btn {
   max-width: 180px;
-}
-
-.about-store-coming-soon {
-  opacity: 0.65;
-  cursor: default;
 }
 
 /* ── Footer ── */

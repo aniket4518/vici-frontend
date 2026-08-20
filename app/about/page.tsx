@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
 import Link from "next/link";
+import { APP_STORE_URL, PLAY_STORE_URL } from "@/lib/store-links";
 
 export default function AboutPage() {
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
@@ -94,7 +95,7 @@ export default function AboutPage() {
     {
       num: "01",
       title: "Lace Up & Open Daur",
-      desc: "Download from Play Store, create your profile, and hit the map. Your city is already divided into hex zones waiting to be conquered.",
+      desc: "Download from the App Store or Play Store, create your profile, and hit the map. Your city is already divided into hex zones waiting to be conquered.",
     },
     {
       num: "02",
@@ -203,7 +204,7 @@ export default function AboutPage() {
         <div className="about-store-buttons">
           {/* Google Play */}
           <a
-            href="https://play.google.com/store/apps/details?id=com.daur.daurapp"
+            href={PLAY_STORE_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="store-btn"
@@ -221,17 +222,23 @@ export default function AboutPage() {
           </a>
 
           {/* App Store */}
-          <div className="store-btn about-store-coming-soon" id="about-app-store-btn">
+          <a
+            href={APP_STORE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="store-btn"
+            id="about-app-store-btn"
+          >
             <span className="store-btn-icon">
               <svg viewBox="0 0 384 512" width="20" height="22" fill="white" xmlns="http://www.w3.org/2000/svg">
                 <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-74.3-19.7C63.1 141.2 4 184.8 4 273.5c0 26.2 4.8 53.3 14.4 81.2 12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-62.1 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
               </svg>
             </span>
             <span className="store-btn-text">
-              <span className="store-btn-label">COMING SOON ON</span>
+              <span className="store-btn-label">DOWNLOAD ON THE</span>
               <span className="store-btn-name">App Store</span>
             </span>
-          </div>
+          </a>
         </div>
       </section>
 
