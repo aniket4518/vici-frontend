@@ -174,26 +174,6 @@ body {
   gap: 0.7rem;
 }
 
-/* Social Proof */
-.social-proof {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  margin-top: 0.25rem;
-}
-
-.social-proof-avatars {
-  display: flex;
-  align-items: center;
-}
-
-/* The tooltip items each carry an inline -12px right margin for the overlap;
-   cancel it on the last one so "Join +N others" keeps its gap. */
-.social-proof-avatars > div:last-child {
-  margin-right: 0 !important;
-}
-
 .waitlist-success {
   font-size: 0.85rem;
   font-weight: 600;
@@ -217,12 +197,6 @@ body {
 
 .avatar:first-child {
   margin-left: 0;
-}
-
-.join-text {
-  font-size: 0.875rem;
-  color: #000000;
-  font-weight: 800;
 }
 
 /* Email Form */
@@ -450,21 +424,6 @@ body {
   /* Adjust rope on mobile */
   .rope-svg {
     transform: scale(1.1);
-  }
-
-  /* Smaller avatars instead of a transform scale, so the row keeps its
-     real height and the block below it doesn't drift. */
-  .social-proof {
-    gap: 0.6rem;
-  }
-
-  .social-proof-avatars img {
-    height: 1.85rem;
-    width: 1.85rem;
-  }
-
-  .join-text {
-    font-size: 0.78rem;
   }
 
   .store-buttons {
