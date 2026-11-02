@@ -4,7 +4,7 @@
     "target": {
       "namespace": "android_app",
       "package_name": "com.daur.daurapp",
-      "sha256_cert_fingerprints": ["<SHA256_FINGERPRINT_PRODUCTION>"]
+      "sha256_cert_fingerprints": ["90:38:4A:9F:2A:84:BA:02:ED:05:5E:CF:81:18:B6:4B:4C:7C:3B:4F:D4:D7:6C:D7:23:48:40:33:1D:59:48:6E"]
     }
   }
 ]

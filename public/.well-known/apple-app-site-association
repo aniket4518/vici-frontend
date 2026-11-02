@@ -4,9 +4,7 @@
     "details": [
       {
         "appIDs": [
-          "<APPLE_TEAM_ID>.com.daur.daurapp",
-          "<APPLE_TEAM_ID>.com.daur.daurapp.preview",
-          "<APPLE_TEAM_ID>.com.daur.daurapp.dev"
+          "U7884BYX86.com.daur.daurapp"
         ],
         "components": [
           { "/": "/post/*", "comment": "Shared activity posts" },
@@ -18,9 +16,7 @@
   },
   "webcredentials": {
     "apps": [
-      "<APPLE_TEAM_ID>.com.daur.daurapp",
-      "<APPLE_TEAM_ID>.com.daur.daurapp.preview",
-      "<APPLE_TEAM_ID>.com.daur.daurapp.dev"
+      "U7884BYX86.com.daur.daurapp"
     ]
   }
 }

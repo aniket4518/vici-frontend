@@ -14,6 +14,7 @@ export async function generateMetadata(
   return deepLinkMetadata("teams", id, images);
 }
 
-export default function TeamsSharePage() {
-  return <DeepLinkFallback kind="teams" />;
+export default async function TeamsSharePage({ params }: Params) {
+  const { id } = await params;
+  return <DeepLinkFallback kind="teams" id={id} />;
 }
