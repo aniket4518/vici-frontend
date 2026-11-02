@@ -14,6 +14,7 @@ export async function generateMetadata(
   return deepLinkMetadata("post", id, images);
 }
 
-export default function PostSharePage() {
-  return <DeepLinkFallback kind="post" />;
+export default async function PostSharePage({ params }: Params) {
+  const { id } = await params;
+  return <DeepLinkFallback kind="post" id={id} />;
 }

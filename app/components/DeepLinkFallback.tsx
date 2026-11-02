@@ -1,6 +1,8 @@
 import type { ResolvedMetadata } from "next";
+import { headers } from "next/headers";
 import Link from "next/link";
 import StoreButtons from "@/app/components/StoreButtons";
+import { openInAppHref, phonePlatform } from "@/lib/open-in-app";
 
 export type DeepLinkKind = "post" | "user" | "teams";
 
@@ -36,9 +38,18 @@ export const DEEP_LINK_COPY: Record<
    These are public share targets, so anyone on desktop — or on mobile without
    the app — lands here instead of a 404. There is no public read endpoint for
    posts, users or teams yet, so the copy is deliberately generic and the id is
-   never rendered: it is untrusted path input with nothing to validate against. */
-export default function DeepLinkFallback({ kind }: { kind: DeepLinkKind }) {
+   never rendered: it is untrusted path input, used only in the validated link
+   behind the phone-only "Open in Daur" button. */
+export default async function DeepLinkFallback({
+  kind,
+  id,
+}: {
+  kind: DeepLinkKind;
+  id: string;
+}) {
   const { title, description } = DEEP_LINK_COPY[kind];
+  const platform = phonePlatform((await headers()).get("user-agent") ?? "");
+  const appHref = platform && openInAppHref(kind, id, platform);
 
   return (
     <div className="about-page">
@@ -60,6 +71,11 @@ export default function DeepLinkFallback({ kind }: { kind: DeepLinkKind }) {
         <span className="about-badge">SHARED WITH YOU</span>
         <h1 className="about-hero-title">{title}</h1>
         <p className="about-hero-sub">{description}</p>
+        {appHref && (
+          <a href={appHref} className="open-in-app-btn" id={`${kind}-open-in-app-btn`}>
+            Open in Daur
+          </a>
+        )}
       </section>
 
       <section className="about-section about-cta-section">
