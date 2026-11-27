@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import SiteFooter from "@/app/components/SiteFooter";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | Daur",
+  title: "Terms of Service",
   description:
     "Read the Daur Terms of Service to understand the rules and guidelines governing your use of our platform.",
+  alternates: { canonical: "/terms-of-service" },
 };
 
 export default function TermsOfServicePage() {
   return (
+    <>
     <main
       style={{
         minHeight: "100vh",
@@ -64,5 +67,7 @@ export default function TermsOfServicePage() {
         />
       </div>
     </main>
+    <SiteFooter />
+    </>
   );
 }

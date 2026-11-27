@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import SiteFooter from "@/app/components/SiteFooter";
 
 export const metadata: Metadata = {
-  title: "Account Deletion | Daur",
+  title: "Account Deletion",
   description:
     "Learn how to permanently delete your Daur account and what data will be removed or retained during the process.",
+  alternates: { canonical: "/account-deletion" },
 };
 
 export default function AccountDeletionPage() {
@@ -352,12 +354,6 @@ export default function AccountDeletionPage() {
           transform: translateY(-1px);
         }
 
-        .p-footer {
-          padding: 48px 0 0;
-          font-size: 12px;
-          color: #ddd;
-        }
-
         @media (max-width: 520px) {
           .p-shell { padding: 0 20px 80px; }
           .p-time-card { flex-direction: column; align-items: flex-start; gap: 16px; }
@@ -528,10 +524,10 @@ export default function AccountDeletionPage() {
             </a>
           </div>
 
-          <footer className="p-footer">Daur · 2026</footer>
 
         </div>
       </div>
+      <SiteFooter />
     </>
   );
 }

@@ -1,6 +1,19 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        /* www serves the whole site, which search engines see as a duplicate.
+           .well-known stays on www because Apple does not follow redirects when
+           it fetches the association file. */
+        source: "/:path((?!\\.well-known/).*)",
+        has: [{ type: "host", value: "www.daurapp.com" }],
+        destination: "https://daurapp.com/:path",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

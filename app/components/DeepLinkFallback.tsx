@@ -125,9 +125,13 @@ export function deepLinkMetadata(
   const url = `/${kind}/${encodeURIComponent(id)}`;
 
   return {
-    title,
+    /* absolute: the copy already names Daur, so skip the root "%s | Daur". */
+    title: { absolute: title },
     description,
     alternates: { canonical: url },
+    /* Every id renders this same generic copy, so these are thin duplicates to
+       a search engine. Unfurls are unaffected, and so is the deep link. */
+    robots: { index: false, follow: true },
     openGraph: {
       title,
       description,

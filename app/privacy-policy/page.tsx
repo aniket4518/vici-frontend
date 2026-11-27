@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import SiteFooter from "@/app/components/SiteFooter";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Daur",
+  title: "Privacy Policy",
   description:
     "Read the Daur Privacy Policy to understand how we collect, use, and protect your personal information.",
+  alternates: { canonical: "/privacy-policy" },
 };
 
 export default function PrivacyPolicyPage() {
   return (
+    <>
     <main
       style={{
         minHeight: "100vh",
@@ -64,5 +67,7 @@ export default function PrivacyPolicyPage() {
         />
       </div>
     </main>
+    <SiteFooter />
+    </>
   );
 }
