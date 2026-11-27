@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import Image from "next/image";
 import Link from "next/link";
 import StoreButtons from "@/app/components/StoreButtons";
+import SiteFooter from "@/app/components/SiteFooter";
 
 export default function AboutPage() {
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
@@ -116,6 +117,7 @@ export default function AboutPage() {
         <Link href="/" className="logo">daur.</Link>
         <nav className="about-nav">
           <Link href="/" className="contact-btn">Home</Link>
+          <Link href="/faq" className="contact-btn">FAQ</Link>
           <Link href="/contact" className="contact-btn">Contact</Link>
         </nav>
       </header>
@@ -184,7 +186,7 @@ export default function AboutPage() {
           <div className="about-showcase-phone">
             <Image
               src="/phone.png"
-              alt="Daur app screenshot"
+              alt="The Daur running app showing a hex territory map"
               width={300}
               height={600}
               className="about-phone-img"
@@ -208,18 +210,7 @@ export default function AboutPage() {
         />
       </section>
 
-      {/* ── Footer ── */}
-      <footer className="about-footer">
-        <div className="about-footer-inner">
-          <span className="logo" style={{ fontSize: "1.4rem" }}>daur.</span>
-          <div className="about-footer-links">
-            <Link href="/privacy-policy">Privacy</Link>
-            <Link href="/terms-of-service">Terms</Link>
-            <Link href="/contact">Contact</Link>
-          </div>
-          <p className="about-footer-copy">© {new Date().getFullYear()} Daur. All rights reserved.</p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

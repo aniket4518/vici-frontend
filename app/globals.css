@@ -917,6 +917,82 @@ body {
   color: #999;
 }
 
+/* FAQ page */
+.faq-list {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.faq-item {
+  padding: 1.75rem 0;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.faq-item:first-child {
+  padding-top: 0;
+}
+
+.faq-question {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 0.6rem;
+}
+
+.faq-answer {
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: #555;
+}
+
+.faq-answer a {
+  color: #000;
+  text-decoration: underline;
+}
+
+/* Shared SiteFooter. Opaque and stacked so fixed or decorative page art never
+   shows through it. */
+.site-footer {
+  position: relative;
+  z-index: 10;
+  background: #ffffff;
+}
+
+.site-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-width: 280px;
+}
+
+.site-footer-tagline {
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+.site-footer-links {
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+}
+
+.site-footer-social {
+  display: flex;
+  gap: 1rem;
+}
+
+.site-footer-social a {
+  color: #666;
+  display: inline-flex;
+  transition: color 0.2s;
+}
+
+.site-footer-social a:hover {
+  color: #000;
+}
+
 /* ── Responsive ── */
 @media (max-width: 767px) {
   .about-hero {
@@ -964,6 +1040,14 @@ body {
   .about-footer-inner {
     flex-direction: column;
     text-align: center;
+  }
+
+  .site-footer-brand {
+    align-items: center;
+  }
+
+  .site-footer-links {
+    justify-content: center;
   }
 }
 

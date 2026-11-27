@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import SiteFooter from "@/app/components/SiteFooter";
 import Link from "next/link";
 
 export default function ContactPage() {
@@ -291,19 +292,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* ── Footer ── */}
-      <footer className="about-footer">
-        <div className="about-footer-inner">
-          <span className="logo" style={{ fontSize: "1.4rem" }}>daur.</span>
-          <div className="about-footer-links">
-            <Link href="/privacy-policy">Privacy</Link>
-            <Link href="/terms-of-service">Terms</Link>
-            <Link href="/about">About</Link>
-            <Link href="/contact">Contact</Link>
-          </div>
-          <p className="about-footer-copy">© {new Date().getFullYear()} Daur. All rights reserved.</p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
